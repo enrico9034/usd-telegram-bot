@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./app
+    restart: always
+    environment:
+      - TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+      - CHAT_ID=-987654321
+      - STOCK_SYMBOL=EUR=X
+      - THRESHOLD=1
+      - INVOICE_AMOUNT_USD=1000
+      - DB_FILE=/app/data/invoices.db
+    volumes:
+      - ./local:/app/data

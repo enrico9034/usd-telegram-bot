@@ -1,0 +1,5 @@
+local
+venv
+env
+docker-compose.yaml
+.vscode/
