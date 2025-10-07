@@ -187,22 +187,18 @@ def check_for_commands():
         elif text.startswith('/simulateall'):
             invoices = get_user_pending_invoices(username)
             invoice_ids = [inv[0] for inv in invoices]
-            if inv_id not in invoice_ids:
-                telegram_send_msg(f"No pending invoice found with ID: {inv_id}")
-                continue
             for inv in invoices:
-                if inv[0] == inv_id:
-                    _, _, usd_amount, original_ecb_change = inv
-                    original_ecb_change = original_ecb_change / 10000  # Convert back to float
-                    telegram_send_msg(
-                        f"Invoice ID: *{inv_id}* for user @{username}\n"
-                        f"Original ECB rate: *{original_ecb_change}*\n"
-                        f"Current price: *{get_current_price(STOCK_SYMBOL)}*\n"
-                        f"Fineco price: *{get_current_price(STOCK_SYMBOL) - DELTA}*\n"
-                        f"ECB Change: *{round(usd_amount * original_ecb_change, 2)} EUR*\n"
-                        f"EUR Change: *{round(usd_amount * (get_current_price(STOCK_SYMBOL) - DELTA), 2)} EUR*\n"
-                        f"Delta change reached: *{round(usd_amount * (get_current_price(STOCK_SYMBOL) - original_ecb_change - DELTA), 2)} EUR*"
-                        )
+                _, _, usd_amount, original_ecb_change = inv
+                original_ecb_change = original_ecb_change / 10000  # Convert back to float
+                telegram_send_msg(
+                    f"Invoice ID: *{inv[0]}* for user @{username}\n"
+                    f"Original ECB rate: *{original_ecb_change}*\n"
+                    f"Current price: *{get_current_price(STOCK_SYMBOL)}*\n"
+                    f"Fineco price: *{get_current_price(STOCK_SYMBOL) - DELTA}*\n"
+                    f"ECB Change: *{round(usd_amount * original_ecb_change, 2)} EUR*\n"
+                    f"EUR Change: *{round(usd_amount * (get_current_price(STOCK_SYMBOL) - DELTA), 2)} EUR*\n"
+                    f"Delta change reached: *{round(usd_amount * (get_current_price(STOCK_SYMBOL) - original_ecb_change - DELTA), 2)} EUR*"
+                    )
 
         elif text.startswith('/simulate'):
             parts = text.split()
